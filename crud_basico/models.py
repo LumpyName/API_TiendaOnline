@@ -12,5 +12,5 @@ class Usuario(models.Model):
     correo_electronico = models.EmailField(unique=True)  # Correo electrónico único
 
     def __str__(self):
-        return f'{self.nombres} {self.apellidos}'
+        return f'[id: {self.pk}] {self.nombres} {self.apellidos}'
 
