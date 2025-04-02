@@ -1,0 +1,69 @@
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.so
+*.egg-info/
+dist/
+build/
+eggs/
+*.egg
+*.manifest
+*.spec
+
+# Entorno virtual
+venv/
+env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+.idea
+
+# Django
+*.log
+*.pot
+db.sqlite3
+media/
+staticfiles/
+
+# Archivos de configuración
+*.env
+*.ini
+*.conf
+*.local
+
+# Archivos de bases de datos
+*.sqlite3
+*.db
+
+# Archivos del IDE
+.vscode/
+.idea/
+*.swp
+*~
+*.sublime-workspace
+*.sublime-project
+
+# Archivos de dependencias y compilación
+*.bak
+.DS_Store
+Thumbs.db
+
+# Archivos de test
+.coverage
+nosetests.xml
+coverage.xml
+*.cover
+*.hypothesis/
+
+# Archivos temporales de sistema
+*.pid
+*.seed
+*.sqlite3-journal
+
+# Docker
+docker-compose.override.yml
+Dockerfile
+.docker/
