@@ -1,5 +1,6 @@
 from django.apps import AppConfig
 
-class CrudBasicoConfig(AppConfig):
+
+class TesteandoConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'crud_basico'
+    name = 'testeando'

@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-09c)cb6+$g)8)5&92&%90&rp#fayl*w2ik#wgqvq4*+!)u&!6y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["172.21.204.82", "0.0.0.0"]
+ALLOWED_HOSTS = ["172.16.107.129", "0.0.0.0", "localhost", "127.0.0.1"]
 
 
 # Application definition
@@ -38,7 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crud_basico.apps.CrudBasicoConfig',
+    'auth_app.apps.AuthAppConfig',
+    'usuarios.aUsuaripps.osConfig',
+    'testeando.apps.TesteandoConfig',
     'corsheaders',
+    'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +56,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'tienda_online.middleware.AppendSlashMiddleware',
 ]
 
 ROOT_URLCONF = 'tienda_online.urls'
@@ -152,3 +158,14 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',  # Solo usuarios autenticados
+    ]
+}
+
+AUTH_USER_MODEL = 'usuarios.Usuario'

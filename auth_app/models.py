@@ -1,3 +1,3 @@
 from django.db import models
 
-# Here your models
+# Aqui agrega tus modelos
