@@ -14,5 +14,5 @@ urlpatterns = [
     path('token/refresh-activity/', TokenRefreshViewWithActivity.as_view(), name='refresh_with_activity'),
     path('actividad/', ActualizarUltimaActividadView.as_view(), name='actualizar_actividad'),
     path('refresh/manual/', RefreshTokenManuallyView.as_view(), name='refresh_manual'),
-    path('register/', RegistroUsuarioView, name="register")
+    path('register/', RegistroUsuarioView.as_view(), name="register_user")
 ]

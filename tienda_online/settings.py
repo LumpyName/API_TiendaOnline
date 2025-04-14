@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crud_basico.apps.CrudBasicoConfig',
     'auth_app.apps.AuthAppConfig',
-    'usuarios.aUsuaripps.osConfig',
+    'usuarios.apps.UsuariosConfig',
     'testeando.apps.TesteandoConfig',
     'corsheaders',
     'rest_framework',
