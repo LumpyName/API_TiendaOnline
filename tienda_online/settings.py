@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -161,11 +161,15 @@ PASSWORD_HASHERS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-    ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',  # Solo usuarios autenticados
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ]
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),  # Token dura 1 hora
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),  # El refresh token dura 7 días
+    'ROTATE_REFRESH_TOKENS': True,  # Habilita la rotación del refresh token
+    'BLACKLIST_AFTER_ROTATION': True,  # Los tokens rotados se añaden a una blacklist
 }
 
 AUTH_USER_MODEL = 'usuarios.Usuario'

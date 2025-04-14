@@ -6,7 +6,12 @@ from django.contrib.auth.hashers import check_password
 from django.core.exceptions import FieldError
 from usuarios.models import Usuario
 
-# Create your views here.
-@api_view(['GET'])
+# Modificar un usuario
+@api_view(['PUT'])
+def prueba_privada(request):
+    return Response({'mensaje': 'Vista protegida'}, status=200)
+
+# Eleminar un usuario
+@api_view(['PUT'])
 def prueba_privada(request):
     return Response({'mensaje': 'Vista protegida'}, status=200)

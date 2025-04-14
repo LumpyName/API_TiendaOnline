@@ -1,50 +1,72 @@
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
+from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.authtoken.models import Token
-from django.contrib.auth.hashers import check_password
-from django.core.exceptions import FieldError
-from .serializer import UsuarioRegistroSerializer
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.views import TokenObtainPairView  # Aquí es donde importamos TokenObtainPairView
+from rest_framework_simplejwt.tokens import RefreshToken
+from datetime import timedelta
+from django.utils import timezone
+
+from auth_app.serializer import UsuarioRegistroSerializer
 from usuarios.models import Usuario
 
-# vdjango.contrib.auth.hashers
-# rest_framework.authtoken.models
-
-@api_view(['POST'])
-@permission_classes([AllowAny])  # Público
-def register_usuario(request):
-    serializer = UsuarioRegistroSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response({'mensaje': 'Usuario creado correctamente'})
-    return Response(serializer.errors, status=400)
+# Clase personalizada para obtener el token de acceso
+class CustomTokenObtainPairView(TokenObtainPairView):
+    # Aquí puedes agregar personalización si la necesitas
+    pass
 
 
-@api_view(['POST'])
-@permission_classes([AllowAny])
-def login_usuario(request):
-    username = request.data.get('username')
-    password = request.data.get('password')
+# Clase para refrescar el token si el usuario ha sido activo
+class TokenRefreshViewWithActivity(APIView):
+    permission_classes = [IsAuthenticated]
 
-    if not username or not password:
-        return Response({'error': 'Faltan datos'}, status=400)
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        last_activity = user.last_activity  # Usamos la última actividad registrada
 
-    try:
-        usuario = Usuario.objects.get(username=username)
+        # Verificar si el token no ha expirado y hubo actividad en la última hora
+        if last_activity and timezone.now() - last_activity < timedelta(hours=1):
+            # Generar un nuevo token de acceso
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'access': str(refresh.access_token)
+            })
 
-    except Usuario.DoesNotExist:
-        return Response({'error': 'Usuario no encontrado'}, status=404)
+        # Si la actividad fue hace más de 1 hora, el token expiró
+        return Response({
+            'detail': 'El token expiró, por favor inicie sesión nuevamente.'
+        })
 
-    except FieldError as error:
-        return Response(
-            {'error': error},
-            status=400
-        )
 
-    if not check_password(password, usuario.password):
-        return Response({'error': 'Contraseña incorrecta'}, status=401)
+# Clase para actualizar la fecha de última actividad
+class ActualizarUltimaActividadView(APIView):
+    permission_classes = [IsAuthenticated]
 
-    # Obtener o crear token
-    token, created = Token.objects.get_or_create(user=usuario)
+    def get(self, request, *args, **kwargs):
+        # Actualizar la última actividad del usuario
+        request.user.last_login = timezone.now()  # Aquí registramos la actividad actual
+        request.user.save()
+        return Response({"detail": "Última actividad registrada correctamente."})
 
-    return Response({'token': token.key})
+
+# Clase para refrescar el token manualmente
+class RefreshTokenManuallyView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        user = request.user
+        refresh = RefreshToken.for_user(user)
+        return Response({
+            'access': str(refresh.access_token),
+            'refresh': str(refresh)
+        })
+
+
+class RegistroUsuarioView(APIView):
+    def post(self, request):
+        serializer = UsuarioRegistroSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'mensaje': 'Usuario creado correctamente'})
+
+        # En caso de que envie la solicitud incompleto
+        return Response(serializer.errors, status=400)
