@@ -31,19 +31,27 @@ ALLOWED_HOSTS = ["172.16.107.129", "0.0.0.0", "localhost", "127.0.0.1"]
 # Application definition
 
 INSTALLED_APPS = [
+    # Apps el RESTframework necesarios
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt.token_blacklist',
+
+    # Aplicaciones de Django necesarias
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Apps para trabajar con Front-Ends
+    'corsheaders',
+
+    # Apps personalisadas
     'crud_basico.apps.CrudBasicoConfig',
     'auth_app.apps.AuthAppConfig',
     'usuarios.apps.UsuariosConfig',
     'testeando.apps.TesteandoConfig',
-    'corsheaders',
-    'rest_framework',
-    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -54,8 +62,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
+
     'tienda_online.middleware.AppendSlashMiddleware',
 ]
 
@@ -166,7 +176,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),  # Token dura 1 hora
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),  # Token dura 1 hora
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),  # El refresh token dura 7 días
     'ROTATE_REFRESH_TOKENS': True,  # Habilita la rotación del refresh token
     'BLACKLIST_AFTER_ROTATION': True,  # Los tokens rotados se añaden a una blacklist
