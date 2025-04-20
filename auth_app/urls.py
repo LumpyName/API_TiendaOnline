@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (
     CustomTokenObtainPairView,
     RegistroUsuarioView,
-    LogoutView
+    LogoutView,
 )
 from rest_framework_simplejwt.views import TokenRefreshView
 

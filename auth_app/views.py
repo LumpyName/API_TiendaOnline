@@ -1,10 +1,8 @@
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework_simplejwt.tokens import RefreshToken
-
+from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-
 
 from auth_app.serializer import UsuarioRegistroSerializer, CustomTokenObtainPairSerializer
 

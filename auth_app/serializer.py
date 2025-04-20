@@ -2,6 +2,7 @@ import re
 
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import get_user_model
+
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.exceptions import AuthenticationFailed
