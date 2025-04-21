@@ -43,7 +43,7 @@ class TestLogin(TestCase):
         token_access = self.loguearse()['access']
 
         response = self.client.put(
-            reverse('prueba'),
+            reverse('modify_user'),
             data={
                 'access_token': token_access,
                 'first_name': "Juan",

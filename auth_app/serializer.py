@@ -14,6 +14,7 @@ class UsuarioRegistroSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = '__all__'
+        read_only_fields = ['date_joined']
         extra_kwargs = {
             'password': {'write_only': True}
         }

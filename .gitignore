@@ -57,6 +57,7 @@ nosetests.xml
 coverage.xml
 *.cover
 *.hypothesis/
+testeo/
 
 # Archivos temporales de sistema
 *.pid
