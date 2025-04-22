@@ -1,0 +1,13 @@
+Pero tú tienes un juguete que quieres usar, y es seguro,
+solo que tu computadora no lo sabe aún.
+
+El comando `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned`
+es como decirle a tu computadora:
+
+- **"Set-ExecutionPolicy"**: "Voy a cambiar una regla de la casa."
+- **"-Scope CurrentUser"**: "Esta regla será solo para mí (el usuario
+    que está jugando), no para toda la casa (los demás usuarios del sistema)."
+- **"-ExecutionPolicy RemoteSigned"**: 
+    "La nueva regla será: Puedes usar juguetes (scripts) si son locales o si los que vienen de internet tienen una etiqueta (firma) que diga que son seguros."
+
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
