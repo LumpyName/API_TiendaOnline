@@ -10,6 +10,7 @@ Esta API permite a los usuarios registrarse, iniciar sesión y modificar su info
 
 - ✅ **Registro de usuarios**
 - 🔐 **Autenticación JWT (access / refresh)**
+- 💥 **Destruccion de tokens JWT**
 - 🔄 **Modificación de datos del usuario autenticado**
 
 ---
@@ -120,7 +121,37 @@ O el campo en el que esta, excepto el de la imagen (endpoint aun no creado)
 ```
 
 ---
+### 4️⃣ Cierre de sesión de usuario
 
+**URL:** `/auth/revocar_token`  
+**Método:** `POST`  
+**Descripción:** Permite revocar un token de renovación (`refresh_token`), cerrando la sesión del usuario. Esto evita que el token sea reutilizado.
+
+**Body de la solicitud:**
+
+```json
+{
+  "refresh": "<refresh_token_string>"
+}
+```
+
+**Respuesta exitosa (205 Reset Content):**
+
+```json
+{
+  "mensaje": "Sesión cerrada correctamente. El token de renovación ha sido revocado."
+}
+```
+
+**Respuesta de error (400 Bad Request):**
+
+```json
+{
+  "error": "Token inválido o ya revocado. No se pudo cerrar sesión."
+}
+```
+
+---
 ## 🧪 Cómo probar
 
 Puedes usar herramientas como **Postman** o hacer pruebas con `curl` desde la terminal.
@@ -146,5 +177,3 @@ No. Para campos tipo imagen (como `foto_perfil`), se debe usar `multipart/form-d
 Este proyecto está bajo la licencia [MIT](https://opensource.org/licenses/MIT).
 
 ---
-
-¿Querés que también te lo prepare como `README.md` bien formateado para GitHub?
