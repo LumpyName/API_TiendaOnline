@@ -166,6 +166,49 @@ curl -X POST http://localhost:8000/login/ \
 
 ---
 
+# 🗄️ Base de Datos (BBDD) que usa la API Generado por Django
+
+## 🧱 Modelo de Usuario Personalizado
+
+Este proyecto utiliza un modelo personalizado llamado `Usuario`, el cual **hereda de `AbstractUser`**.  
+Esto significa que incluye **todos los campos por defecto** que Django proporciona para la autenticación, además de **campos personalizados**.
+
+### 🧩 Campos por defecto incluidos por `AbstractUser`
+
+| Campo             | Tipo              | Descripción                                  |
+|------------------|-------------------|----------------------------------------------|
+| `id`             | `AutoField`       | Identificador único (clave primaria).        |
+| `username`       | `CharField`       | Nombre de usuario único.                     |
+| `first_name`     | `CharField`       | Nombre del usuario.                          |
+| `last_name`      | `CharField`       | Apellido del usuario.                        |
+| `email`          | `EmailField`      | Correo electrónico.                          |
+| `password`       | `CharField`       | Contraseña hasheada.                         |
+| `is_staff`       | `BooleanField`    | Si puede acceder al admin de Django.         |
+| `is_active`      | `BooleanField`    | Si la cuenta está activa.                    |
+| `is_superuser`   | `BooleanField`    | Tiene todos los permisos.                    |
+| `last_login`     | `DateTimeField`   | Última vez que inició sesión.                |
+| `date_joined`    | `DateTimeField`   | Fecha en que se registró.                    |
+
+### ✍️ Campos personalizados agregados
+
+| Campo             | Tipo              | Descripción                                                                 |
+|------------------|-------------------|-----------------------------------------------------------------------------|
+| `foto_perfil`    | `ImageField`      | Imagen de perfil. Se guarda en la carpeta `media/fotos_perfil/`. Opcional. |
+| `last_activity`  | `DateTimeField`   | Última actividad del usuario. Se inicia con la fecha actual por defecto.    |
+
+
+## 🗃️ Sobre la Base de Datos
+
+Actualmente, el proyecto **no usa una base de datos profesional como PostgreSQL o MySQL**.  
+En su lugar, se utiliza **SQLite**, que viene por defecto con Django.
+
+### ⚠️ Producción
+
+Si querés llevar este proyecto a producción, se recomienda migrar a una base de datos más robusta como **PostgreSQL** para mayor rendimiento, escalabilidad y seguridad.
+
+
+--- 
+
 ## 📷 ¿Se pueden enviar imágenes?
 
 No. Para campos tipo imagen (como `foto_perfil`), se debe usar `multipart/form-data` y no `application/json`. Esto requiere un endpoint preparado para aceptar archivos (endpoint que no fue creado (aun)).
