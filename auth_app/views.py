@@ -2,12 +2,12 @@
 Script de vistas para el manejo de autenticación y registro de usuarios en la aplicación 'auth_app'.
 
 Este módulo incluye clases y métodos relacionados con:
-- Revocación de tokens JWT mediante la inclusión en una lista negra.
+- Revocación de tokens JWT mediante inclusión en una lista negra.
 - Generación de tokens personalizados utilizando un serializador especializado.
 - Registro de nuevos usuarios con validación y activación inicial.
 
 Clases:
-- LogoutView: Proporciona una funcionalidad para revocar tokens de renovación (refresh tokens).
+- LogoutView: Proporciona funcionalidad para revocar tokens de renovación (refresh tokens).
 - CustomTokenObtainPairView: Amplía la funcionalidad para obtener tokens de acceso y renovación personalizados.
 - RegistroUsuarioView: Permite el registro de nuevos usuarios con datos validados.
 
@@ -15,7 +15,6 @@ Dependencias:
 - Django REST Framework y Simple JWT para autenticación basada en tokens.
 - Serializadores personalizados para el manejo de datos y lógica de negocio.
 """
-
 
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
@@ -28,22 +27,23 @@ from auth_app.serializer import UsuarioRegistroSerializer, CustomTokenObtainPair
 # Revocacion de tokens
 class LogoutView(APIView):
     """
-    View for revoking (blacklisting) refresh tokens to log out users.
+    Vista para revocar (incluir en lista negra) tokens de renovación para cerrar sesión de usuarios.
 
-    Methods:
-        post(request): Handles POST requests to revoke a given refresh token.
+    Métodos:
+        post(request): Maneja solicitudes POST para revocar un token de renovación dado.
 
-    Usage:
-        - Receives a refresh token from the client in the request body.
-        - Revokes the token by blacklisting it to prevent further use.
-        - Returns HTTP 205 (Reset Content) on success.
-        - Returns HTTP 400 (Bad Request) if the process fails.
-    
-    Example request body:
+    Uso:
+        - Recibe un token de renovación desde el cliente en el cuerpo de la solicitud.
+        - Revoca el token incluyéndolo en una lista negra para evitar su uso futuro.
+        - Retorna HTTP 205 (Reset Content) en caso de éxito.
+        - Retorna HTTP 400 (Bad Request) si el proceso falla.
+
+    Ejemplo de cuerpo de solicitud:
     {
         "refresh": "<refresh_token_string>"
     }
     """
+
 
     @staticmethod
     def post(request):

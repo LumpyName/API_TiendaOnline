@@ -75,7 +75,8 @@ class TestLogin(TestCase):
         self.assertIn('refresh', response.data)
         self.assertIn('access', response.data)
 
-
+        print("El estatus fue:", response.status_code)
+        print("Pues fue todo un exito")
     def test_logout(self):
         token_refresh = self.loguearse()['refresh']
         response_status_code = self.loguearse()['status_code']
@@ -100,3 +101,6 @@ class TestLogin(TestCase):
         )
 
         self.assertEqual(response2.status_code, status.HTTP_401_UNAUTHORIZED)
+
+        print("El estatus fue:", response2.status_code)
+        print("Pues fue todo un exito")

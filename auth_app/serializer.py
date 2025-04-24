@@ -11,6 +11,24 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class UsuarioRegistroSerializer(serializers.ModelSerializer):
+    """
+        Serializador para la creación y validación de nuevos usuarios.
+
+        Este serializador se utiliza para registrar usuarios, asegurando que los datos de entrada
+        cumplan con los requisitos de la aplicación. Incluye validación personalizada para el campo
+        de contraseña, exigiendo una longitud mínima y la presencia de distintos tipos de caracteres
+        (mayúsculas, minúsculas y caracteres especiales). Además, se encarga de hashear la contraseña
+        antes de guardar el usuario en la base de datos.
+
+        Funcionalidades:
+            - Validación estricta de la contraseña según los criterios de seguridad definidos.
+            - Excluye campos de solo lectura como 'date_joined' del proceso de creación.
+            - Utiliza el modelo de usuario personalizado si está definido en el proyecto.
+
+        Campos:
+            - Todos los campos del modelo de usuario, excluyendo 'date_joined' como solo lectura.
+        """
+
     class Meta:
         model = get_user_model()
         fields = '__all__'
@@ -50,6 +68,19 @@ class UsuarioRegistroSerializer(serializers.ModelSerializer):
 
 # Clase para que el usuario logee
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    """
+        Serializador personalizado para la autenticación de usuarios y la obtención de tokens JWT.
+
+        Este serializador reemplaza la validación estándar de credenciales, permitiendo personalizar
+        los mensajes de error para usuario no encontrado o contraseña incorrecta. Si la autenticación
+        es exitosa, genera y retorna un par de tokens JWT (`refresh` y `access`) asociados al usuario.
+
+        Funcionalidades:
+            - Verifica que el usuario exista según el nombre de usuario proporcionado.
+            - Comprueba que la contraseña ingresada sea correcta.
+            - Devuelve mensajes de error específicos en caso de fallo.
+            - Genera y retorna los tokens de autenticación JWT en caso de éxito.
+        """
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
